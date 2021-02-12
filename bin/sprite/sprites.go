@@ -1,26 +1,11 @@
 package sprite
 
 import (
+	"fmt"
 	"image"
 )
 
 type Sprites []Sprite
-
-func (sp Sprites) ToSet() (set Sprites) {
-	if len(sp) == 0 {
-		return set
-	}
-
-	set = append(set, sp[0])
-	for i := 0; i < len(sp)-1; i++ {
-		for ii := i + 1; ii < len(sp); ii++ {
-			if !sp[ii].IdenticalInRotations(sp[i]) {
-				set = append(set, sp[ii])
-			}
-		}
-	}
-	return set
-}
 
 func NewSpritesFromImage(image image.Image, spriteSize int) Sprites {
 	tt := Sprites{}
@@ -32,4 +17,28 @@ func NewSpritesFromImage(image image.Image, spriteSize int) Sprites {
 		}
 	}
 	return tt
+}
+
+func (sp Sprites) ToSet() (set Sprites) {
+	if len(sp) == 0 {
+		return set
+	}
+
+	set = append(set, sp[0])
+	for i := 0; i < len(sp)-1; i++ {
+		for ii := i + 1; ii < len(sp); ii++ {
+			if !sp[ii].IdenticalEvenIfRotated(sp[i]) {
+				set = append(set, sp[ii])
+			}
+		}
+	}
+	return set
+}
+
+func (sp Sprites) Checksum() string {
+	var checksum string
+	for _, sprite := range sp {
+		checksum += fmt.Sprintf("%v_", sprite)
+	}
+	return checksum[:len(checksum)-1]
 }

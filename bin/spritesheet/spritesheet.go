@@ -21,3 +21,21 @@ func FromFile(file *os.File, tileSize int) (*Spritesheet, error) {
 		Sprites: sprite.NewSpritesFromImage(img, tileSize),
 	}, nil
 }
+
+func (sp *Spritesheet) FilterUnique() {
+	spriteMap := make(map[string]sprite.Sprite)
+	for _, sprite := range sp.Sprites {
+		_, ok := spriteMap[sprite.Checksum()]
+		if !ok {
+			spriteMap[sprite.Checksum()] = sprite
+		}
+	}
+
+	newSprites := sprite.Sprites{}
+	for _, v := range spriteMap {
+		newSprites = append(newSprites, v)
+	}
+
+	// TODO: Test! :)
+	sp.Sprites = newSprites
+}

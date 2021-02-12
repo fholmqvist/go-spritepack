@@ -7,6 +7,25 @@ import (
 )
 
 func TestFromFile(t *testing.T) {
+	sh := LoadFromFile(t)
+	if len(sh.Sprites) != 4 {
+		t.Fatalf("length was expected to be 4 was %v", len(sh.Sprites))
+	}
+	sh.FilterUnique()
+	if len(sh.Sprites) != 2 {
+		t.Fatalf("length was expected to be 2 was %v", len(sh.Sprites))
+	}
+}
+
+func TestUnique(t *testing.T) {
+	sh := LoadFromFile(t)
+	sh.FilterUnique()
+	if len(sh.Sprites) != 2 {
+		t.Fatalf("length was expected to be 2 was %v", len(sh.Sprites))
+	}
+}
+
+func LoadFromFile(t *testing.T) *Spritesheet {
 	file, err := os.Open("../../samples/sample_001.png")
 	if err != nil {
 		t.Fatal(err)
@@ -15,7 +34,5 @@ func TestFromFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(sh.Sprites) != 4 {
-		t.Fatalf("length was expected to be 4 was %v", len(sh.Sprites))
-	}
+	return sh
 }

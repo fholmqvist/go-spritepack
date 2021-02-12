@@ -59,7 +59,7 @@ func TestRotatedDuplicate(t *testing.T) {
 	sprite1, sprite2 := dummySprites()
 	sprite2.Rotate()
 
-	if !sprite2.IdenticalInRotations(sprite1) {
+	if !sprite2.IdenticalEvenIfRotated(sprite1) {
 		t.Fatalf("%v should be identical to %v despite rotations", sprite2, sprite1)
 	}
 }

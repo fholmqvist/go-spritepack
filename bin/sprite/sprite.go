@@ -1,6 +1,7 @@
 package sprite
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 )
@@ -32,7 +33,7 @@ func (s Sprite) Identical(b Sprite) bool {
 	return true
 }
 
-func (s Sprite) IdenticalInRotations(b Sprite) bool {
+func (s Sprite) IdenticalEvenIfRotated(b Sprite) bool {
 	for i := 0; i < 4; i++ {
 		if s.Identical(b) {
 			return true
@@ -70,4 +71,14 @@ func (s Sprite) Rotate() {
 			row[i], row[n-1-i] = row[n-1-i], row[i]
 		}
 	}
+}
+
+func (s Sprite) Checksum() string {
+	var checksum string
+	for _, row := range s {
+		for _, sprite := range row {
+			checksum += fmt.Sprintf("%v_", sprite)
+		}
+	}
+	return checksum[:len(checksum)-1]
 }
