@@ -44,9 +44,10 @@ func (sp *Spritesheet) FilterUnique() {
 
 	spriteMap := make(map[string]sprite.Sprite)
 	for _, sprite := range sp.Sprites {
-		_, ok := spriteMap[sprite.Checksum()]
+		checksum := sprite.Checksum()
+		_, ok := spriteMap[checksum]
 		if !ok {
-			spriteMap[sprite.Checksum()] = sprite
+			spriteMap[checksum] = sprite
 		}
 	}
 

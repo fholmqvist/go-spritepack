@@ -64,6 +64,23 @@ func TestRotatedDuplicate(t *testing.T) {
 	}
 }
 
+func TestFlipHorizontally(t *testing.T) {
+	sprite := Sprite{
+		{color.Black, color.Black, color.White},
+		{color.White, color.White, color.Black},
+	}
+	flipped := Sprite{
+		{color.White, color.Black, color.Black},
+		{color.Black, color.White, color.White},
+	}
+
+	sprite.FlipHorizontally()
+
+	if !sprite.Identical(flipped) {
+		t.Fatalf("\ndesired:\n%v\nwas:\n%v", flipped, sprite)
+	}
+}
+
 func TestSpritesToSet(t *testing.T) {
 	rotated := dummySprite()
 	rotated.Rotate()
