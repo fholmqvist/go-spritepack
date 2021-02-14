@@ -8,11 +8,11 @@ import (
 
 type Sprite [][]color.Color
 
-func FromImageSection(image image.Image, startX, startY, tileSize int) Sprite {
+func FromImageSection(image image.Image, startX, startY, spritesize int) Sprite {
 	t := Sprite{}
-	for x := 0; x < tileSize; x++ {
+	for x := 0; x < spritesize; x++ {
 		t = append(t, []color.Color{})
-		for y := 0; y < tileSize; y++ {
+		for y := 0; y < spritesize; y++ {
 			t[x] = append(t[x], image.At(x+startX, y+startY))
 		}
 	}

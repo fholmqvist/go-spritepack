@@ -10,20 +10,29 @@ import (
 )
 
 type Spritesheet struct {
-	Sprites  sprite.Sprites
-	bounds   image.Rectangle
-	tileSize int
+	Sprites    sprite.Sprites
+	bounds     image.Rectangle
+	spritesize int
 }
 
-func FromFile(file *os.File, tileSize int) (*Spritesheet, error) {
+func FromPath(filepath string, spritesize int) (*Spritesheet, error) {
+	file, err := os.Open(filepath)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+	return FromFile(file, spritesize)
+}
+
+func FromFile(file *os.File, spritesize int) (*Spritesheet, error) {
 	img, _, err := image.Decode(file)
 	if err != nil {
 		return nil, fmt.Errorf("tileset.FromFile: %w", err)
 	}
 	return &Spritesheet{
-		Sprites:  sprite.NewSpritesFromImage(img, tileSize),
-		bounds:   img.Bounds(),
-		tileSize: tileSize,
+		Sprites:    sprite.NewSpritesFromImage(img, spritesize),
+		bounds:     img.Bounds(),
+		spritesize: spritesize,
 	}, nil
 }
 
@@ -64,10 +73,10 @@ func (sp *Spritesheet) spritesToImage(img *image.RGBA) {
 	var x, y int
 	for _, sprite := range sp.Sprites {
 		sp.spriteToImage(img, sprite, x, y)
-		x += sp.tileSize
+		x += sp.spritesize
 		if x >= sp.bounds.Max.X {
 			x = 0
-			y += sp.tileSize
+			y += sp.spritesize
 		}
 	}
 }

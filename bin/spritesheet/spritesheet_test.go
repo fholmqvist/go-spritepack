@@ -2,7 +2,6 @@ package spritesheet
 
 import (
 	_ "image/png"
-	"os"
 	"testing"
 )
 
@@ -26,11 +25,7 @@ func TestUnique(t *testing.T) {
 }
 
 func LoadFromFile(t *testing.T) *Spritesheet {
-	file, err := os.Open("../../samples/sample_001.png")
-	if err != nil {
-		t.Fatal(err)
-	}
-	sh, err := FromFile(file, 8)
+	sh, err := FromPath("../../samples/sample_001.png", 8)
 	if err != nil {
 		t.Fatal(err)
 	}
