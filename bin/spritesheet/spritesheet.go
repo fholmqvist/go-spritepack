@@ -3,8 +3,11 @@ package spritesheet
 import (
 	"fmt"
 	"image"
+	"image/gif"
+	"image/jpeg"
 	"image/png"
 	"os"
+	"strings"
 
 	"github.com/holmqvist1990/go-spritepack/bin/sprite"
 )
@@ -56,13 +59,25 @@ func (sp *Spritesheet) FilterUnique() {
 }
 
 func (sp *Spritesheet) SaveToFile(filename string) error {
+	if len(filename) < 4 || !strings.Contains(filename, ".") {
+		return fmt.Errorf("invalid filename: %v", filename)
+	}
+
 	img := image.NewRGBA(sp.bounds)
 	sp.spritesToImage(img)
 	file, err := os.Create(filename)
 	if err != nil {
 		return err
 	}
-	err = png.Encode(file, img)
+
+	switch strings.Split(filename, ".")[1] {
+	case "png":
+		err = png.Encode(file, img)
+	case "gif":
+		err = gif.Encode(file, img, nil)
+	case "jpeg":
+		err = jpeg.Encode(file, img, nil)
+	}
 	if err != nil {
 		return nil
 	}

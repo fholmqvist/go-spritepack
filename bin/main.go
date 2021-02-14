@@ -20,8 +20,8 @@ func main() {
 		fmt.Println(line)
 	}
 
-	flag.StringVar(&input, "input file path", "./samples/sample_001.png", "file to be compressed")
-	flag.StringVar(&output, "output file path", "./samples/sample_001_compressed.png", "to be saved as")
+	flag.StringVar(&input, "input", "./samples/sample_001.png", "input file path")
+	flag.StringVar(&output, "output", "./samples/sample_001_compressed.png", "output file path")
 	flag.IntVar(&spritesize, "spritesize", 8, "sprite size for input spritesheet")
 
 	flag.Parse()
