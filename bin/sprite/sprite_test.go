@@ -56,54 +56,77 @@ func TestCopy(t *testing.T) {
 	}
 }
 
-func TestRotate(t *testing.T) {
-	isRotated := func(a, b Sprite) {
-		if !a.Identical(b) {
-			t.Fatalf("\n%v\n%v\nand\n%v\n%v\nshould be equal when rotated",
-				a[0], a[1], b[0], b[1])
-		}
-	}
-
+func TestRotateTwo(t *testing.T) {
 	sprite := Sprite{
 		{color.Black, color.White},
 		{color.White, color.White},
 	}
 
-	rotatedOnce := Sprite{
-		{color.White, color.Black},
-		{color.White, color.White},
+	rotations := Sprites{
+		{
+			{color.White, color.Black},
+			{color.White, color.White},
+		},
+		{
+			{color.White, color.White},
+			{color.White, color.Black},
+		},
+		{
+			{color.White, color.White},
+			{color.Black, color.White},
+		},
+		{
+			{color.Black, color.White},
+			{color.White, color.White},
+		},
 	}
 
-	sprite.Rotate()
+	for _, rot := range rotations {
+		sprite.Rotate()
+		if !sprite.Identical(rot) {
+			t.Fatalf("\n%v\n%v\nand\n%v\n%v\nshould be equal when rotated",
+				sprite[0], sprite[1], rot[0], rot[1])
+		}
+	}
+}
 
-	isRotated(sprite, rotatedOnce)
-
-	rotatedTwice := Sprite{
-		{color.White, color.White},
-		{color.White, color.Black},
+func TestRotateThree(t *testing.T) {
+	sprite := Sprite{
+		{color.Black, color.White, color.White},
+		{color.White, color.White, color.White},
+		{color.White, color.White, color.White},
 	}
 
-	sprite.Rotate()
-
-	isRotated(sprite, rotatedTwice)
-
-	rotatedThrice := Sprite{
-		{color.White, color.White},
-		{color.Black, color.White},
+	rotations := Sprites{
+		{
+			{color.White, color.White, color.Black},
+			{color.White, color.White, color.White},
+			{color.White, color.White, color.White},
+		},
+		{
+			{color.White, color.White, color.White},
+			{color.White, color.White, color.White},
+			{color.White, color.White, color.Black},
+		},
+		{
+			{color.White, color.White, color.White},
+			{color.White, color.White, color.White},
+			{color.Black, color.White, color.White},
+		},
+		{
+			{color.Black, color.White, color.White},
+			{color.White, color.White, color.White},
+			{color.White, color.White, color.White},
+		},
 	}
 
-	sprite.Rotate()
-
-	isRotated(sprite, rotatedThrice)
-
-	rotatedFullLap := Sprite{
-		{color.Black, color.White},
-		{color.White, color.White},
+	for _, rot := range rotations {
+		sprite.Rotate()
+		if !sprite.Identical(rot) {
+			t.Fatalf("\n%v\n%v\nand\n%v\n%v\nshould be equal when rotated",
+				sprite[0], sprite[1], rot[0], rot[1])
+		}
 	}
-
-	sprite.Rotate()
-
-	isRotated(sprite, rotatedFullLap)
 }
 
 func TestRotatedDuplicate(t *testing.T) {
