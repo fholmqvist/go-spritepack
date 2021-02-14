@@ -3,9 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"image/color"
 	"log"
 	"os"
 
+	"github.com/holmqvist1990/go-spritepack/bin/sprite"
 	"github.com/holmqvist1990/go-spritepack/bin/spritesheet"
 )
 
@@ -16,6 +18,19 @@ var (
 )
 
 func main() {
+
+	sprite := sprite.Sprite{
+		{color.Black, color.Black, color.White},
+		{color.White, color.White, color.Black},
+	}
+
+	fmt.Println(sprite)
+
+	sprite.FlipHorizontally()
+
+	fmt.Println(sprite)
+
+	return
 	for _, line := range logo {
 		fmt.Println(line)
 	}

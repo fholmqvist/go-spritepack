@@ -65,11 +65,20 @@ func (s Sprite) Rotate() {
 		}
 	}
 
-	s.Flip()
+	// Flip.
+	for _, row := range s {
+		for i := 0; i < n/2; i++ {
+			row[i], row[n-1-i] = row[n-1-i], row[i]
+		}
+	}
 }
 
-func (s Sprite) Flip() {
+func (s Sprite) FlipHorizontally() {
 	n := len(s)
+
+	for i := 0; i < n/2; i++ {
+		s[i], s[n-1-i] = s[n-1-i], s[i]
+	}
 
 	for _, row := range s {
 		for i := 0; i < n/2; i++ {
