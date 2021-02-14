@@ -57,20 +57,53 @@ func TestCopy(t *testing.T) {
 }
 
 func TestRotate(t *testing.T) {
+	isRotated := func(a, b Sprite) {
+		if !a.Identical(b) {
+			t.Fatalf("\n%v\n%v\nand\n%v\n%v\nshould be equal when rotated",
+				a[0], a[1], b[0], b[1])
+		}
+	}
+
 	sprite := Sprite{
-		{color.Black, color.Black},
+		{color.Black, color.White},
 		{color.White, color.White},
 	}
-	rotated := Sprite{
-		{color.Black, color.Black},
+
+	rotatedOnce := Sprite{
+		{color.White, color.Black},
 		{color.White, color.White},
 	}
 
 	sprite.Rotate()
 
-	if !sprite.Identical(rotated) {
-		t.Fatalf("\n%v\n%v\nand\n%v\n%v\nshould be equal when rotated", sprite[0], sprite[1], rotated[0], rotated[1])
+	isRotated(sprite, rotatedOnce)
+
+	rotatedTwice := Sprite{
+		{color.White, color.White},
+		{color.White, color.Black},
 	}
+
+	sprite.Rotate()
+
+	isRotated(sprite, rotatedTwice)
+
+	rotatedThrice := Sprite{
+		{color.White, color.White},
+		{color.Black, color.White},
+	}
+
+	sprite.Rotate()
+
+	isRotated(sprite, rotatedThrice)
+
+	rotatedFullLap := Sprite{
+		{color.Black, color.White},
+		{color.White, color.White},
+	}
+
+	sprite.Rotate()
+
+	isRotated(sprite, rotatedFullLap)
 }
 
 func TestRotatedDuplicate(t *testing.T) {
