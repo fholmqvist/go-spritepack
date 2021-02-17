@@ -1,8 +1,12 @@
 # GO-SPRITEPACK!
 
-### **WIP! Not ready for use.**
-
 A spritesheet packer, written in Go.
+
+Checks for:
+* Identical sprites.
+* Identical sprites, but rotated.
+* Identical sprites, but flipped horizontally.
+* Identical sprites, but flipped vertically.
 
 ### **Example use.**
 ```
