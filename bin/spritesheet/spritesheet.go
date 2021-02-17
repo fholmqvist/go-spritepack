@@ -41,22 +41,6 @@ func FromFile(file *os.File, spritesize int) (*Spritesheet, error) {
 
 func (sp *Spritesheet) FilterUnique() {
 	sp.Sprites = sp.Sprites.ToSet()
-
-	spriteMap := make(map[string]sprite.Sprite)
-	for _, sprite := range sp.Sprites {
-		checksum := sprite.Checksum()
-		_, ok := spriteMap[checksum]
-		if !ok {
-			spriteMap[checksum] = sprite
-		}
-	}
-
-	newSprites := sprite.Sprites{}
-	for _, v := range spriteMap {
-		newSprites = append(newSprites, v)
-	}
-
-	sp.Sprites = newSprites
 }
 
 func (sp *Spritesheet) SaveToFile(filename string) error {
@@ -71,18 +55,19 @@ func (sp *Spritesheet) SaveToFile(filename string) error {
 		return err
 	}
 
-	switch strings.Split(filename, ".")[1] {
+	split := strings.Split(filename, ".")
+	ext := split[len(split)-1]
+	switch ext {
 	case "png":
 		err = png.Encode(file, img)
 	case "gif":
 		err = gif.Encode(file, img, nil)
 	case "jpeg":
 		err = jpeg.Encode(file, img, nil)
+	default:
+		err = fmt.Errorf("unrecognized filetype: %v", ext)
 	}
-	if err != nil {
-		return nil
-	}
-	return nil
+	return err
 }
 
 func (sp *Spritesheet) spritesToImage(img *image.RGBA) {

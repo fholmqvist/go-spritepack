@@ -20,9 +20,9 @@ func main() {
 		fmt.Println(line)
 	}
 
-	flag.StringVar(&input, "input", "./samples/sample_001.png", "input file path")
-	flag.StringVar(&output, "output", "./samples/sample_001_packed.png", "output file path")
-	flag.IntVar(&spritesize, "spritesize", 8, "sprite size for input spritesheet")
+	flag.StringVar(&input, "input", "../testfile/dwarves.png", "input file path")
+	flag.StringVar(&output, "output", "../testfile/dwarves_packed.png", "output file path")
+	flag.IntVar(&spritesize, "spritesize", 16, "sprite size for input spritesheet")
 
 	flag.Parse()
 

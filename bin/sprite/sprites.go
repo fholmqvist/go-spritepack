@@ -21,10 +21,10 @@ func NewSpritesFromImage(image image.Image, spriteSize int) Sprites {
 
 func (sp Sprites) ToSet() (set Sprites) {
 	if len(sp) == 0 {
-		return set
+		return
 	}
 
-	set = append(set, sp[0])
+	spriteMap := map[string]Sprite{}
 	for i := 0; i < len(sp)-1; i++ {
 		for ii := i + 1; ii < len(sp); ii++ {
 			if sp[ii].IdenticalIfRotated(sp[i]) {
@@ -36,10 +36,20 @@ func (sp Sprites) ToSet() (set Sprites) {
 			if sp[ii].IdenticalIfFlippedVertically(sp[i]) {
 				continue
 			}
-			set = append(set, sp[ii])
+			checksum := sp[ii].Checksum()
+			_, ok := spriteMap[checksum]
+			if !ok {
+				spriteMap[checksum] = sp[ii]
+				continue
+			}
 		}
 	}
-	return set
+
+	for _, v := range spriteMap {
+		set = append(set, v)
+	}
+
+	return
 }
 
 func (sp Sprites) Checksum() string {

@@ -7,7 +7,7 @@ import (
 
 func TestFromFile(t *testing.T) {
 	sh := LoadFromFile(t)
-	if len(sh.Sprites) != 4 {
+	if len(sh.Sprites) != 9 {
 		t.Fatalf("length was expected to be 4 was %v", len(sh.Sprites))
 	}
 	sh.FilterUnique()
@@ -25,7 +25,7 @@ func TestUnique(t *testing.T) {
 }
 
 func LoadFromFile(t *testing.T) *Spritesheet {
-	sh, err := FromPath("../../samples/sample_001.png", 8)
+	sh, err := FromPath("../../testfile/dwarves.png", 16)
 	if err != nil {
 		t.Fatal(err)
 	}

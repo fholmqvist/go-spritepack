@@ -9,7 +9,7 @@ import (
 )
 
 func TestFromImageSection(t *testing.T) {
-	file, err := os.Open("../../samples/sample_001.png")
+	file, err := os.Open("../../testfile/dwarves.png")
 	if err != nil {
 		t.Fatalf("%v", err)
 	}
@@ -18,23 +18,10 @@ func TestFromImageSection(t *testing.T) {
 	if err != nil {
 		t.Fatalf("%v", err)
 	}
-	sprite := FromImageSection(img, 0, 0, 8)
-	if len(sprite) != 8 {
-		t.Fatalf("expected length to be 8 was %v", len(sprite))
-	}
-
-	// Name clash between type RGBA and function
-	// RGBA arbitrarily doesn't work on some lines,
-	// hence this ... slightly less elegant implementation.
-	want := color.RGBA{0, 0, 0, 255}
-	wr, wg, wb, wa := want.RGBA()
-	for _, row := range sprite {
-		for _, color := range row {
-			r, g, b, a := color.RGBA()
-			if r != wr || g != wg || b != wb || a != wa {
-				t.Fatalf("colors not identical\nSprite: %v\nwant: %v", color, want)
-			}
-		}
+	size := 16
+	sprite := FromImageSection(img, 0, 0, size)
+	if len(sprite) != size {
+		t.Fatalf("expected length to be %v was %v", size, len(sprite))
 	}
 }
 
