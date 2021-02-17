@@ -129,15 +129,15 @@ func TestSpritesToSet(t *testing.T) {
 	rotated := dummySprite()
 	rotated.Rotate()
 
-	Sprites := Sprites{
+	sprites := Sprites{
 		dummySprite(),
 		rotated,
 		dummySprite(),
 	}
 
-	set := Sprites.ToSet()
+	set := sprites.ToSet()
 	if len(set) != 1 {
-		t.Fatalf("%v should be 1", len(set))
+		t.Fatalf("%v should be 1\n%v\n%v\n%v", len(set), sprites[0], sprites[1], sprites[2])
 	}
 }
 

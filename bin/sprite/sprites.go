@@ -25,24 +25,31 @@ func (sp Sprites) ToSet() (set Sprites) {
 	}
 
 	spriteMap := map[string]Sprite{}
-	for i := 0; i < len(sp)-1; i++ {
-		for ii := i + 1; ii < len(sp); ii++ {
-			if sp[ii].IdenticalIfRotated(sp[i]) {
-				continue
+
+outer:
+	for fst := 0; fst < len(sp)-1; fst++ {
+		for snd := fst + 1; snd < len(sp); snd++ {
+			if sp[snd].IdenticalIfRotated(sp[fst]) {
+				continue outer
 			}
-			if sp[ii].IdenticalIfFlippedHorizontally(sp[i]) {
-				continue
+			if sp[snd].IdenticalIfFlippedHorizontally(sp[fst]) {
+				continue outer
 			}
-			if sp[ii].IdenticalIfFlippedVertically(sp[i]) {
-				continue
+			if sp[snd].IdenticalIfFlippedVertically(sp[fst]) {
+				continue outer
 			}
-			checksum := sp[ii].Checksum()
+			checksum := sp[snd].Checksum()
 			_, ok := spriteMap[checksum]
 			if !ok {
-				spriteMap[checksum] = sp[ii]
-				continue
+				spriteMap[checksum] = sp[snd]
+				continue outer
 			}
 		}
+	}
+
+	// Wow, such filter. Much removed everything.
+	if len(spriteMap) == 0 {
+		spriteMap[sp[0].Checksum()] = sp[0]
 	}
 
 	for _, v := range spriteMap {
