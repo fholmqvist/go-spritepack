@@ -1,5 +1,7 @@
 # GO-SPRITEPACK!
 
+![Example](https://github.com/Holmqvist1990/go-spritepack/blob/master/example.png?raw=true)
+
 A spritesheet packer, written in Go.
 
 Checks for:
