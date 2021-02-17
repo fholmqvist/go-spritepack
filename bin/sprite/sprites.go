@@ -27,9 +27,16 @@ func (sp Sprites) ToSet() (set Sprites) {
 	set = append(set, sp[0])
 	for i := 0; i < len(sp)-1; i++ {
 		for ii := i + 1; ii < len(sp); ii++ {
-			if !sp[ii].IdenticalEvenIfRotated(sp[i]) {
-				set = append(set, sp[ii])
+			if sp[ii].IdenticalIfRotated(sp[i]) {
+				continue
 			}
+			if sp[ii].IdenticalIfFlippedHorizontally(sp[i]) {
+				continue
+			}
+			if sp[ii].IdenticalIfFlippedVertically(sp[i]) {
+				continue
+			}
+			set = append(set, sp[ii])
 		}
 	}
 	return set

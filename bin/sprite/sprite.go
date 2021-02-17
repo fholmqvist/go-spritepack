@@ -33,15 +33,28 @@ func (s Sprite) Identical(b Sprite) bool {
 	return true
 }
 
-func (s Sprite) IdenticalEvenIfRotated(b Sprite) bool {
+func (s Sprite) IdenticalIfRotated(b Sprite) bool {
+	copy := b.Copy()
 	for i := 0; i < 4; i++ {
-		if s.Identical(b) {
+		if s.Identical(copy) {
 			return true
 		}
 
-		b.Rotate()
+		copy.Rotate()
 	}
 	return false
+}
+
+func (s Sprite) IdenticalIfFlippedHorizontally(b Sprite) bool {
+	copy := b.Copy()
+	copy.FlipHorizontally()
+	return s.Identical(copy)
+}
+
+func (s Sprite) IdenticalIfFlippedVertically(b Sprite) bool {
+	copy := b.Copy()
+	copy.FlipVertically()
+	return s.Identical(copy)
 }
 
 func (s Sprite) Copy() Sprite {
@@ -74,16 +87,18 @@ func (s Sprite) Rotate() {
 }
 
 func (s Sprite) FlipHorizontally() {
-	n := len(s)
-
-	for i := 0; i < n/2; i++ {
-		s[i], s[n-1-i] = s[n-1-i], s[i]
-	}
-
 	for _, row := range s {
+		n := len(row)
 		for i := 0; i < n/2; i++ {
 			row[i], row[n-1-i] = row[n-1-i], row[i]
 		}
+	}
+}
+
+func (s Sprite) FlipVertically() {
+	n := len(s)
+	for i := 0; i < n/2; i++ {
+		s[i], s[n-1-i] = s[n-1-i], s[i]
 	}
 }
 

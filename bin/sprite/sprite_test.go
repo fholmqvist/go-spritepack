@@ -56,41 +56,7 @@ func TestCopy(t *testing.T) {
 	}
 }
 
-func TestRotateTwo(t *testing.T) {
-	sprite := Sprite{
-		{color.Black, color.White},
-		{color.White, color.White},
-	}
-
-	rotations := Sprites{
-		{
-			{color.White, color.Black},
-			{color.White, color.White},
-		},
-		{
-			{color.White, color.White},
-			{color.White, color.Black},
-		},
-		{
-			{color.White, color.White},
-			{color.Black, color.White},
-		},
-		{
-			{color.Black, color.White},
-			{color.White, color.White},
-		},
-	}
-
-	for _, rot := range rotations {
-		sprite.Rotate()
-		if !sprite.Identical(rot) {
-			t.Fatalf("\n%v\n%v\nand\n%v\n%v\nshould be equal when rotated",
-				sprite[0], sprite[1], rot[0], rot[1])
-		}
-	}
-}
-
-func TestRotateThree(t *testing.T) {
+func TestRotate(t *testing.T) {
 	sprite := Sprite{
 		{color.Black, color.White, color.White},
 		{color.White, color.White, color.White},
@@ -133,8 +99,42 @@ func TestRotatedDuplicate(t *testing.T) {
 	sprite1, sprite2 := dummySprites()
 	sprite2.Rotate()
 
-	if !sprite2.IdenticalEvenIfRotated(sprite1) {
+	if !sprite2.IdenticalIfRotated(sprite1) {
 		t.Fatalf("%v should be identical to %v despite rotations", sprite2, sprite1)
+	}
+}
+
+func TestHorizontalFlip(t *testing.T) {
+	sprite := Sprite{
+		{color.Black, color.White},
+	}
+
+	desired := Sprite{
+		{color.White, color.Black},
+	}
+
+	sprite.FlipHorizontally()
+
+	if !sprite.Identical(desired) {
+		t.Fatalf("%v should be identical to %v", sprite, desired)
+	}
+}
+
+func TestVerticalFlip(t *testing.T) {
+	sprite := Sprite{
+		{color.Black, color.White},
+		{color.White, color.Black},
+	}
+
+	desired := Sprite{
+		{color.White, color.Black},
+		{color.Black, color.White},
+	}
+
+	sprite.FlipVertically()
+
+	if !sprite.Identical(desired) {
+		t.Fatalf("%v should be identical to %v", sprite, desired)
 	}
 }
 
