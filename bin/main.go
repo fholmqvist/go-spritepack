@@ -20,11 +20,25 @@ func main() {
 		fmt.Println(line)
 	}
 
-	flag.StringVar(&input, "input", "./testfile/dwarves.png", "input file path")
-	flag.StringVar(&output, "output", "./testfile/dwarves_packed.png", "output file path")
-	flag.IntVar(&spritesize, "spritesize", 16, "sprite size for input spritesheet")
+	flag.StringVar(&input, "input", "", "Input file path.\nExample: -input=\"./testfile/dwarves.png\"")
+	flag.StringVar(&output, "output", "", "Output file path.\nExample: -output=\"./testfile/dwarves_packed.png\"")
+	flag.IntVar(&spritesize, "spritesize", 16, "Sprite size for input spritesheet.\nExample: -spritesize=16")
 
 	flag.Parse()
+
+	help := "Run with -help to display more information."
+
+	if input == "" {
+		fmt.Println("No input file given. Please supply one with -input=\"path\".")
+		fmt.Println(help)
+		return
+	}
+
+	if output == "" {
+		fmt.Println("No output file given. Please supply one with -output=\"path\".")
+		fmt.Println(help)
+		return
+	}
 
 	fmt.Printf("Loading file: %v.\n", input)
 
