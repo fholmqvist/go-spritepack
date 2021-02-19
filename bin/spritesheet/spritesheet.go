@@ -39,10 +39,14 @@ func FromFile(file *os.File, spritesize int) (*Spritesheet, error) {
 	}, nil
 }
 
+// Removes duplicate
+// sprites in spritesheet.
 func (sp *Spritesheet) FilterUnique() {
 	sp.Sprites = sp.Sprites.ToSet()
 }
 
+// Saves the in memory spritesheet
+// to the given filename.
 func (sp *Spritesheet) SaveToFile(filename string) error {
 	if len(filename) < 4 || !strings.Contains(filename, ".") {
 		return fmt.Errorf("invalid filename: %v", filename)
@@ -70,6 +74,8 @@ func (sp *Spritesheet) SaveToFile(filename string) error {
 	return err
 }
 
+// Helper that injects many
+// sprites onto an existing image.
 func (sp *Spritesheet) spritesToImage(img *image.RGBA) {
 	var x, y int
 	for _, sprite := range sp.Sprites {
@@ -82,6 +88,8 @@ func (sp *Spritesheet) spritesToImage(img *image.RGBA) {
 	}
 }
 
+// Helper that injects a
+// sprite onto an existing image.
 func (sp *Spritesheet) spriteToImage(img *image.RGBA, sprite sprite.Sprite, xOffset, yOffset int) {
 	for x, row := range sprite {
 		for y, col := range row {

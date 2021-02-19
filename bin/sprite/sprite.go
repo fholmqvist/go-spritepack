@@ -57,6 +57,10 @@ func (s Sprite) IdenticalIfFlippedVertically(b Sprite) bool {
 	return s.Identical(copy)
 }
 
+// Prevents accidental mutation
+// by copying the sprite into a
+// new sprite. This as values
+// of slices in Go are references.
 func (s Sprite) Copy() Sprite {
 	var copy [][]color.Color
 	for x, row := range s {
@@ -102,12 +106,14 @@ func (s Sprite) FlipVertically() {
 	}
 }
 
-func (s Sprite) Checksum() string {
-	var checksum string
+// Generates an ID for the sprite by
+// concatenating all values into a string.
+func (s Sprite) ID() string {
+	var id string
 	for _, row := range s {
 		for _, sprite := range row {
-			checksum += fmt.Sprintf("%v_", sprite)
+			id += fmt.Sprintf("%v_", sprite)
 		}
 	}
-	return checksum[:len(checksum)-1]
+	return id[:len(id)-1]
 }

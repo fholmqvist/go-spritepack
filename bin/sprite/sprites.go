@@ -19,6 +19,7 @@ func NewSpritesFromImage(image image.Image, spriteSize int) Sprites {
 	return tt
 }
 
+// Removes all duplicate sprites in collection.
 func (sp Sprites) ToSet() (set Sprites) {
 	if len(sp) == 0 {
 		return
@@ -38,10 +39,14 @@ outer:
 			if sp[snd].IdenticalIfFlippedVertically(sp[fst]) {
 				continue outer
 			}
-			checksum := sp[snd].Checksum()
-			_, ok := spriteMap[checksum]
+
+			id := sp[snd].ID()
+
+			_, ok := spriteMap[id]
 			if !ok {
-				spriteMap[checksum] = sp[snd]
+				// Completely unique
+				// sprite. Add it.
+				spriteMap[id] = sp[snd]
 				continue outer
 			}
 		}
@@ -49,7 +54,7 @@ outer:
 
 	// Wow, such filter. Much removed everything.
 	if len(spriteMap) == 0 {
-		spriteMap[sp[0].Checksum()] = sp[0]
+		spriteMap[sp[0].ID()] = sp[0]
 	}
 
 	for _, v := range spriteMap {
@@ -59,7 +64,9 @@ outer:
 	return
 }
 
-func (sp Sprites) Checksum() string {
+// Generates an aggregate ID based
+// on the underlying sprite IDs.
+func (sp Sprites) ID() string {
 	var checksum string
 	for _, sprite := range sp {
 		checksum += fmt.Sprintf("%v_", sprite)
