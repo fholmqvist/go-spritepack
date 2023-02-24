@@ -12,7 +12,7 @@ Checks for:
 
 ### **Example use.**
 ```
-$ ./go-spritepack.exe -input="path/file.png" -output="otherpath/file_packed.png" -spritesize=16
+$ go-spritepack -input=folder1/file.png -output=folder2/file_packed.png -spritesize=16
 ```
 
 ### **Supports:**
